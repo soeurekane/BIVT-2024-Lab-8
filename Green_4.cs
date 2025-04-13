@@ -14,7 +14,7 @@ namespace Lab_8
 
         public override void Review()
         {
-            if (Input == null || Input == "")
+            if (string.IsNullOrEmpty(Input))
             {
                 _output = null;
                 return;
@@ -23,9 +23,10 @@ namespace Lab_8
             string[] temp_words = Input.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             int count = 0;
-            foreach (string word in temp_words)
+
+            for (int i = 0; i < temp_words.Length; i++)
             {
-                if (word != null && word.Trim().Length > 0)
+                if (temp_words[i] != null && temp_words[i].Trim().Length > 0)
                 {
                     count++;
                 }
@@ -33,11 +34,13 @@ namespace Lab_8
 
             string[] surnames = new string[count];
             int index = 0;
-            foreach (string word in temp_words)
+
+            for (int i = 0; i < temp_words.Length; i++)
             {
-                if (word != null && word.Trim().Length > 0)
+                if (temp_words[i] != null && temp_words[i].Trim().Length > 0)
                 {
-                    surnames[index++] = word.Trim();
+                    surnames[index] = temp_words[i].Trim();
+                    index++;
                 }
             }
             if (surnames.Length == 0)

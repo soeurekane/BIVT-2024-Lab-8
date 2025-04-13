@@ -52,20 +52,17 @@ namespace Lab_8
             //массив результат
             var result = new (char, double)[result_length];
             int ind_result = 0;
+
             for (int i = 0; i < russian_letters.Length; i++)
             {
                 if (counts[i] > 0)  //если буква встр хотя бы раз
                 {
-                    double frequency;
-
+                    double frequency = -1.0; // Значение по умолчанию
                     if (t > 0)
                     {
                         frequency = (double)counts[i] / t;
                     }
-                    else
-                    {
-                        frequency = -1.0;
-                    }
+                    result[ind_result++] = (russian_letters[i], frequency);
 
                     //заполняем массив значениями
                     result[ind_result] = (russian_letters[i], frequency);
@@ -77,9 +74,12 @@ namespace Lab_8
         public override string ToString()
         {
             if (_output == null || _output.Length == 0)
+            {
                 return "";
+            }
 
             string result = "";
+
             for (int i = 0; i < _output.Length - 1; i++)//до предпоследнего элемента
             {
                 result += $"{_output[i].Item1} - {_output[i].Item2:F4}\n";

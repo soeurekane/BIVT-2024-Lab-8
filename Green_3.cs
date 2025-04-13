@@ -11,7 +11,6 @@ namespace Lab_8
         //поля
         private string[] _output;
         private readonly string _sequence;
-
         public string[] Output => _output;//свойство
         public Green_3(string input, string sequence) : base(input)//конструктор
         {
@@ -28,12 +27,12 @@ namespace Lab_8
 
         public override void Review()
         {
-            if (_sequence == null || _sequence == "")
+            if (string.IsNullOrEmpty(_sequence))
             {
                 _output = null;
                 return;
             }
-            if (Input == null || Input == "")
+            if (string.IsNullOrEmpty(Input))
             {
                 _output = new string[0];
                 return;
@@ -57,7 +56,6 @@ namespace Lab_8
             }
             string[] words = new string[сount];
             int index = 0;
-
             foreach (string word in temp_words)
             {
                 if (word != null && word.Trim().Length > 0)
@@ -66,12 +64,10 @@ namespace Lab_8
                     index++;
                 }
             }
-
             string[] temp_results = new string[words.Length];
             int result_count = 0;
 
-            //проверяем слова
-            for (int i = 0; i < words.Length; i++)
+            for (int i = 0; i < words.Length; i++)//проверяем слова
             {
                 string lower_word = words[i].ToLower();
                 if (lower_word.Contains(_sequence))

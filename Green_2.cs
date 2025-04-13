@@ -17,7 +17,7 @@ namespace Lab_8
 
         public override void Review()
         {
-            if (Input == null || Input.Length == 0)
+            if (string.IsNullOrEmpty(Input))
             {
                 _output = null;
                 return;
@@ -27,50 +27,31 @@ namespace Lab_8
                 ' ', '.', '!', '?', ',', ':', '\"', ';',
                 '–', '(', ')', '[', ']', '{', '}', '/'
             };
-            string[] temp_words = Input.Split(marks);
 
-            //кол-во непустых слов
-            int count = 0;
-            foreach (string word in temp_words)
-            {
-                if (word != "")
-                {
-                    count++;
-                }
-            }
-
-            //заполняем массив непустыми строками
-            string[] words = new string[count];
-            int index = 0;
-            foreach (string word in temp_words)
-            {
-                if (word != "")
-                {
-                    words[index++] = word;
-                }
-            }
+            string[] words = Input.Split(marks, StringSplitOptions.RemoveEmptyEntries);
             if (words.Length == 0)
             {
                 _output = new char[0];
                 return;
             }
 
-            char[] letters = new char[words.Length];//хранит первые буквы
             int[] counts = new int[words.Length];
             int t_special = 0; //счетчик уникальных букв
+            char[] letters = new char[words.Length];//хранит первые буквы
 
             foreach (string word in words)
             {
-                if (word.Length == 0) continue;
-
-                char first_letter = char.ToLower(word[0]);//нижний регистр
-
-                //проверяем что это буква не включая цифры и знаки
-                if (first_letter < 'A' || (first_letter > 'Z' && first_letter < 'a') || first_letter > 'z')
+                if (word.Length == 0)
                 {
                     continue;
                 }
+                char first_letter = char.ToLower(word[0]);//нижний регистр
 
+                //проверяем что это буква не включая цифры и знаки
+                if (!char.IsLetter(first_letter))
+                {
+                    continue;
+                }
                 bool f = false;
                 for (int i = 0; i < t_special; i++)
                 {
