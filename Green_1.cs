@@ -80,12 +80,15 @@ namespace Lab_8
 
             string result = "";
 
-            for (int i = 0; i < _output.Length - 1; i++)//до предпоследнего элемента
+            for (int i = 0; i < _output.Length; ++i)
             {
-                result += $"{_output[i].Item1} - {_output[i].Item2:F4}\n";
-            }
-            result += $"{_output[_output.Length - 1].Item1} - {_output[_output.Length - 1].Item2:F4}";//последний элемент отдельно
+                result += $"{_output[i].Item1} - {_output[i].Item2:F4}";
 
+                if (i + 1 < _output.Length)
+                {
+                    result += Environment.NewLine;
+                }
+            }
             return result;
         }
     }

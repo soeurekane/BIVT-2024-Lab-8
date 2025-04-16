@@ -27,12 +27,12 @@ namespace Lab_8
 
         public override void Review()
         {
-            if (string.IsNullOrEmpty(_sequence))
+            if (_sequence == null || _sequence == "")
             {
                 _output = null;
                 return;
             }
-            if (string.IsNullOrEmpty(Input))
+            if (Input == null || Input.Length == 0)
             {
                 _output = new string[0];
                 return;
@@ -45,50 +45,48 @@ namespace Lab_8
 
             //разбиваем строку на слова
             string[] temp_words = Input.Split(marks, StringSplitOptions.RemoveEmptyEntries);
-
-            int сount = 0;
-            foreach (string word in temp_words)
+            int count = 0;
+            for (int i = 0; i < temp_words.Length; i++)
             {
-                if (word != null && word.Trim() != "")
+                if (!string.IsNullOrWhiteSpace(temp_words[i]))
                 {
-                    сount++;
+                    count++;
                 }
             }
-            string[] words = new string[сount];
+            string[] words = new string[count];
             int index = 0;
-            foreach (string word in temp_words)
+            for (int i = 0; i < temp_words.Length; i++)
             {
-                if (word != null && word.Trim().Length > 0)
+                if (!string.IsNullOrWhiteSpace(temp_words[i]))
                 {
-                    words[index] = word.Trim();
-                    index++;
+                    words[index++] = temp_words[i].Trim();
                 }
             }
             string[] temp_results = new string[words.Length];
             int result_count = 0;
 
-            for (int i = 0; i < words.Length; i++)//проверяем слова
+            for (int i = 0; i < words.Length; i++)
             {
                 string lower_word = words[i].ToLower();
-                if (lower_word.Contains(_sequence))
+                if (!string.IsNullOrEmpty(_sequence) && lower_word.Contains(_sequence))
                 {
-                    bool f = false;
+                    bool isUnique = true;
                     for (int j = 0; j < result_count; j++)
                     {
-                        if (temp_results[j].ToLower() == lower_word)
+                        if (temp_results[j] == lower_word)
                         {
-                            f = true;
+                            isUnique = false;
                             break;
                         }
                     }
-                    if (f == false)
+                    if (isUnique)
                     {
                         temp_results[result_count] = lower_word;
                         result_count++;
                     }
                 }
             }
-            
+
             _output = new string[result_count];
             for (int i = 0; i < result_count; i++)
             {
@@ -103,12 +101,12 @@ namespace Lab_8
                 return "";
             }
             string result = "";
-            for (int i = 0; i < _output.Length; i++)
+            for (int i = 0; i < _output.Length; ++i)
             {
-                result += _output[i];
-                if (i < _output.Length - 1)
+                result += $"{_output[i]}";
+                if (i + 1 < _output.Length)
                 {
-                    result += "\n";
+                    result += Environment.NewLine;
                 }
             }
             return result;

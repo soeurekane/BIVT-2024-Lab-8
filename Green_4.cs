@@ -14,7 +14,7 @@ namespace Lab_8
 
         public override void Review()
         {
-            if (string.IsNullOrEmpty(Input))
+            if (Input == null || Input.Length == 0)
             {
                 _output = null;
                 return;
@@ -26,27 +26,30 @@ namespace Lab_8
 
             for (int i = 0; i < temp_words.Length; i++)
             {
-                if (temp_words[i] != null && temp_words[i].Trim().Length > 0)
+                if (!string.IsNullOrWhiteSpace(temp_words[i]))
                 {
                     count++;
                 }
             }
-
             string[] surnames = new string[count];
-            int index = 0;
+            int ind = 0;
 
             for (int i = 0; i < temp_words.Length; i++)
             {
-                if (temp_words[i] != null && temp_words[i].Trim().Length > 0)
+                if (!string.IsNullOrWhiteSpace(temp_words[i]))
                 {
-                    surnames[index] = temp_words[i].Trim();
-                    index++;
+                    surnames[ind] = temp_words[i].Trim();
+                    ind++;
                 }
             }
             if (surnames.Length == 0)
             {
                 _output = new string[0];
                 return;
+            }
+            for (int i = 0; i < surnames.Length; i++)
+            {
+                surnames[i] = surnames[i].Trim();
             }
 
             int t_special = 0;
@@ -56,9 +59,10 @@ namespace Lab_8
             {
                 bool f = false;
                 string c = surnames[i];
+                
                 for (int j = 0; j < t_special; j++)
                 {
-                    if (c.ToLower() == special_surnames[j].ToLower())
+                    if (string.Equals(c, special_surnames[j], StringComparison.OrdinalIgnoreCase))
                     {
                         f = true;
                         break;
@@ -80,7 +84,7 @@ namespace Lab_8
             {
                 for (int j = 0; j < result.Length - 1 - i; j++)
                 {
-                    if (result[j].ToLower() == result[j + 1].ToLower())
+                    if (Sort(result[j].ToLower(), result[j + 1].ToLower()))
                     {
                         string temp = result[j];
                         result[j] = result[j + 1];
@@ -89,6 +93,24 @@ namespace Lab_8
                 }
             }
             _output = result;
+        }
+        private bool Sort(string p1, string p2)
+        {
+            int length = Math.Min(p1.Length, p2.Length);
+
+            for (int i = 0; i < length; i++)
+            {
+                if (p1[i] > p2[i])
+                {
+                    return true;
+                }
+                if (p1[i] < p2[i])
+                {
+                    return false;
+                }
+            }
+
+            return p1.Length > p2.Length;
         }
 
         public override string ToString()
