@@ -19,6 +19,12 @@ namespace Lab_8
         
         public override void Review()
         {
+            if (Input == null || Input.Length == 0)
+            {
+                _output = new (char, double)[0];
+                return;
+            }
+
             int[] counts = new int[33];//счетчик для каждой буквы
             int t = 0; //общий счетчик букв
 
@@ -50,22 +56,14 @@ namespace Lab_8
             }
 
             //массив результат
-            var result = new (char, double)[result_length];
+            (char, double)[] result = new (char, double)[result_length];
             int ind_result = 0;
 
             for (int i = 0; i < russian_letters.Length; i++)
             {
                 if (counts[i] > 0)  //если буква встр хотя бы раз
                 {
-                    double frequency = -1.0; // Значение по умолчанию
-                    if (t > 0)
-                    {
-                        frequency = (double)counts[i] / t;
-                    }
-                    result[ind_result++] = (russian_letters[i], frequency);
-
-                    //заполняем массив значениями
-                    result[ind_result] = (russian_letters[i], frequency);
+                    result[ind_result] = (russian_letters[i], (double)counts[i] / t);
                     ind_result++;
                 }
             }
